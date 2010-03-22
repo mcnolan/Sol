@@ -1,0 +1,22 @@
+<?php
+
+class Sol {
+
+protected $setting;
+protected $module;
+protected $data;
+protected $theme;
+
+public function module() {
+	get {
+		
+	}
+}
+
+public function __constructor() {
+	$this->data = new Mysql();
+
+}
+
+}
+?>

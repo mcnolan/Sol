@@ -1,0 +1,16 @@
+<?php
+//base class for all modules
+abstract class solModule {
+
+
+
+}
+
+class moduleHandler {
+
+
+
+
+}
+
+?>

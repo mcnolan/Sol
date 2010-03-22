@@ -1,0 +1,9 @@
+<?php
+class Error {
+
+	public static printError($code,$text) {
+		echo "Error code $code\n$text";
+	}
+
+}
+?>
