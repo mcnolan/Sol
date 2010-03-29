@@ -37,7 +37,7 @@ public function setting() {
 
 //This function will break the query string into usable chunks
 protected function processQueryString() {
-	if($setting->
+	if($this->setting()->
 }
 
 public function main() {

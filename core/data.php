@@ -4,30 +4,31 @@ interface IData {
 
 	public function query($query);
 	public function queryReturnLastId($query);
-	protected function connect($username,$password,$database);
+	protected function connect($hostname,$username,$password,$database);
 	public function returnArray($result);
 	public function returnObject($result);
 	public function rowCount($result);
 
 }
 
-class Mysql implements IData {
+class Mysql extends BaseSetting implements IData {
 	//TODO : add error handling
-	private $link;
+	private $_link;
 
-	function __constructor() {
-		$this->connect();
+	function __construct() {
+		$config = $this->getDataSettings();
+		$this->connect($config["Hostname"],$config["Username"],$config["Password"],$config["Database"]);
 	}
-	protected function connect($username,$password,$database) {
-		$this->link = mysql_connect($username,$password);
-		mysql_select_db($database,$this->$link);
+	protected function connect($hostname, $username,$password,$database) {
+		$this->link = mysql_connect($hostname,$username,$password);
+		mysql_select_db($database,$this->_link);
 	}
 	public function query($query) {
-		$r = mysql_query($query,$this->link);
+		$r = mysql_query($query,$this->_link);
 		return $r;
 	}
 	public function queryReturnLastId($query) {
-		return mysql_insert_id($this->query($query,$this->link));
+		return mysql_insert_id($this->query($query,$this->_link));
 	}
 	public function returnArray($result) {
 		return mysql_fetch_array($result);
