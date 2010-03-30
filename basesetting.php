@@ -3,8 +3,8 @@ class BaseSetting {
 
 	private $_adaptor = "Mysql";
 	private $_dbHost = "localhost";
-	private $_dbUser = "root";
-	private $_dbPass = "ergitz";
+	private $_dbUser = "user";
+	private $_dbPass = "password";
 	private $_dbData = "sol";
 	public static $pre = "sol_";
 
@@ -13,7 +13,7 @@ class BaseSetting {
 	}
 
 	protected function getDataSettings() {
-		$dbSetting = array("Hostname" => $this->_dbHost, "Username" => $this->_dbUser, "Password" => $this->_dbPass);
+		$dbSetting = array("Hostname" => $this->_dbHost, "Username" => $this->_dbUser, "Password" => $this->_dbPass, "Database" => $this->_dbData);
 		return $dbSetting;
 	}
 }

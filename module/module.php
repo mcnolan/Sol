@@ -2,17 +2,28 @@
 //base class for all modules
 abstract class IModule {
 
-	protected $_sol;
+	private $_sol;
 
-	//install
+	//do something to install
 	abstract function _install();
 
-	private function root() {
+	protected function data() {
 		if(isset($this->_sol)) {
-			return $this->_sol;
+			return $this->_sol->data();
 		}
 	}
-
+	protected function setting() {
+		if(isset($this->_sol)) {
+			return $this->_sol->setting();
+		}
+	}
+	protected function theme() {
+		if(isset($this->_sol)) {
+			return $this->_sol->theme();
+		}
+	}
+	
+	//Default constructor will process its own part of the query string and map args[1] to Action[ARG]
 	public function __construct(Sol $baseref) {
 		$this->_sol = $baseref;
 		//Process query string

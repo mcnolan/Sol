@@ -16,7 +16,8 @@ public function module() {
 
 public function data() {
 	if($this->_data === null) {
-		$this->_data = new $this->setting()->getDatabaseType()($this->setting()->getDatasettings());
+		$dtype = $this->setting()->getDatabaseType();
+		$this->_data = new $dtype();
 	}
 	return $this->_data;
 }
@@ -37,9 +38,10 @@ public function setting() {
 
 //This function will break the query string into usable chunks
 protected function processQueryString() {
-	if($this->setting()->
+	//if($this->setting()->
 }
 
+//Entry point into the program
 public function main() {
 }
 
