@@ -7,33 +7,40 @@ protected $_module;
 protected $_data;
 protected $_theme;
 
-public function module() {
+public function getModule() {
 	if($this->_module === null) {
-		$this->_module = new ModuleHandler();
+		$this->_module = new ModuleHandler($this);
 	}
 	return $this->_module;
 }
 
-public function data() {
+public function getData() {
 	if($this->_data === null) {
-		$dtype = $this->setting()->getDatabaseType();
+		$dtype = $this->setting->getDatabaseType();
 		$this->_data = new $dtype();
 	}
 	return $this->_data;
 }
 
-public function theme() {
+public function getTheme() {
 	if($this->_theme === null) {
 		$this->_theme = new ThemeHandler();
 	}
 	return $this->_theme;
 }
 
-public function setting() {
+public function getSetting() {
 	if($this->_setting === null) {
 		$this->_setting = new SolSetting();
 	}
 	return $this->_setting;
+}
+
+public function __get($name) {
+	$func = "get".ucfirst($name);
+	if(method_exists($this,$func)) {
+		return $this->$func();
+	}
 }
 
 //This function will break the query string into usable chunks

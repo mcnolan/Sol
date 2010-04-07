@@ -6,6 +6,8 @@ abstract class IModule {
 
 	//do something to install
 	abstract function _install();
+	//this is where you want to make things happen
+	abstract function _main();
 
 	protected function data() {
 		if(isset($this->_sol)) {
@@ -22,11 +24,12 @@ abstract class IModule {
 			return $this->_sol->theme();
 		}
 	}
-	
-	//Default constructor will process its own part of the query string and map args[1] to Action[ARG]
+	public function getClassName() {
+		return get_class($this);
+	}
+	//Default constructor
 	public function __construct(Sol $baseref) {
 		$this->_sol = $baseref;
-		//Process query string
 	}
 
 }
@@ -44,16 +47,16 @@ class ModuleHandler {
 			}
 			return $this->_modules[$name];
 		} else {
-			throw new exception("Module could not be found, or is not registered");
+			throw new exception("Module could not be found, or is not registered",301);
 		}
 	
 	}
-
+	/*
 	public function __set($name, $value) {
-		if(is_subclass_of($value,'IModule') {
+		if(is_subclass_of($value,'IModule')) {
 			$this->_modules[$name] = $value;
 		}
-	}
+	} */
 
 	public function executeHooks($function) {
 		foreach($this->_modules as $mname => $module) {
@@ -66,8 +69,9 @@ class ModuleHandler {
 		}
 	}
 
-	public function registerModule($module) {
-		//TODO Add module-database interaction
+	private function registerModule($module) {
+		//TODO Add module-database interaction /Add to database
+		$this->_modules[get_class($module)] = $module;
 	}
 	
 	private function getRegisteredModules() {
@@ -83,7 +87,9 @@ class ModuleHandler {
 	public function install($module) {
 		if(is_subclass_of($module,'IModule')) {
 			$module->_install();
-			$this->_modules[] = $module;
+			$this->registerModule($module);
+		} else {
+			throw new exception("Illegal Module, cannot install",302);
 		}
 	}
 
