@@ -1,5 +1,4 @@
 <?
-
 class SolSetting extends BaseSetting {
 	private $_extra = array();
 	private $_sol;	
@@ -25,7 +24,6 @@ class SolSetting extends BaseSetting {
 	}
 
 	private function loadDatabaseValues() {
-		//TODO Load custom settings from the database
 		$rowset = $this->_sol->data->tableSelect('setting');
 		foreach($rowset as $setting) {
 			$this->_extra[$setting->SettingName]["value"] = $setting->SettingValue;
@@ -40,6 +38,18 @@ class SolSetting extends BaseSetting {
 			$this->_sol->data->tableInsert('setting',$new);
 		} else {
 			throw new exception("Setting already exists",403);
+		}
+	}
+
+	public function unregisterSetting($name) {
+		if($this->exists($name)) {
+			if(isset($this->_extra[$name]['locked'])) {
+				//Database loaded variable, run DELETE command
+				$this->_sol->data->query("DELETE FROM " . BaseSetting::$pre . "setting WHERE SettingName = '".$name."'");
+			}
+			unset($this->_extra[$name]);
+		} else {
+			throw new exception("Setting does not exist",404);
 		}
 	}
 

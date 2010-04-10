@@ -18,6 +18,8 @@ class Error {
 	const E_SETTING_LOCKED = 402;
 	//Trying to register a setting that already exists
 	const E_SETTING_REGEXIST = 403;
+	//Trying to remove a setting that doesn't exist
+	const E_SETTING_REMEXIST = 404;
 	
 	public static function printError($code,$text) {
 		echo "Error code $code\n$text";
