@@ -10,6 +10,8 @@ class Error {
 	const E_MODULE_NOT_EXIST = 301;
 	//Module does not extend base module interface
 	const E_MODULE_ILLEGAL = 302;
+	//Module already installed
+	const E_MODULE_IEXISTS = 303;
 	//General setting error
 	const E_SETTING = 400;
 	//Trying to get a setting that doesn't exist
