@@ -14,6 +14,10 @@ class Error {
 	const E_SETTING = 400;
 	//Trying to get a setting that doesn't exist
 	const E_SETTING_NOSUCH = 401;
+	//Trying to write to a setting that is locked
+	const E_SETTING_LOCKED = 402;
+	//Trying to register a setting that already exists
+	const E_SETTING_REGEXIST = 403;
 	
 	public static function printError($code,$text) {
 		echo "Error code $code\n$text";

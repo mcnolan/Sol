@@ -75,7 +75,10 @@ class ModuleHandler {
 	}
 	
 	private function getRegisteredModules() {
-		//TODO Add registered module database interaction. Populate module array
+		$modules = $this->_sol->data->tableSelect('module');
+		foreach($modules as $module) {
+			$this->_modules[$module->ModuleName] = null;
+		}
 	}
 	
 	public function __construct(Sol $sol) {
@@ -86,6 +89,7 @@ class ModuleHandler {
 	
 	public function install($module) {
 		if(is_subclass_of($module,'IModule')) {
+			//error check?			
 			$module->_install();
 			$this->registerModule($module);
 		} else {
