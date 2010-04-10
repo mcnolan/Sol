@@ -1,13 +1,13 @@
 <?php
 //base class for all modules
-abstract class IModule {
+abstract class AModule {
 
 	private $_sol;
 
 	//do something to install
-	abstract function _install();
+	abstract function install();
 	//this is where you want to make things happen
-	abstract function _main();
+	abstract function main();
 
 	protected function data() {
 		if(isset($this->_sol)) {
@@ -22,6 +22,11 @@ abstract class IModule {
 	protected function theme() {
 		if(isset($this->_sol)) {
 			return $this->_sol->theme();
+		}
+	}
+	protected function args($ref) {
+		if(isset($this->_sol)) {
+			return $this->_sol->args[$ref];
 		}
 	}
 	public function getClassName() {
@@ -69,7 +74,7 @@ class ModuleHandler {
 		}
 	}
 
-	private function registerModule($module) {
+	private function registerModule(AModule $module) {
 		//TODO Add module-database interaction /Add to database
 		$this->_modules[get_class($module)] = $module;
 	}
@@ -88,7 +93,7 @@ class ModuleHandler {
 	
 	
 	public function install($module) {
-		if(is_subclass_of($module,'IModule')) {
+		if(is_subclass_of($module,'AModule')) {
 			//error check?			
 			$module->_install();
 			$this->registerModule($module);
