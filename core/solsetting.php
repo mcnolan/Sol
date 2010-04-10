@@ -13,7 +13,7 @@ class SolSetting extends BaseSetting {
 	}
 
 	public function __set($name, $value) {
-		if(!$this->extra[$name]["locked"]) {
+		if(!$this->_extra[$name]["locked"]) {
 			$this->_extra[$name]["value"] = $value;
 		} else {
 			throw new exception("This setting is locked, and cannot be changed",402);
