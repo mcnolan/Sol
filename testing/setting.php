@@ -9,7 +9,7 @@ $sol = new Sol();
 echo "<p>+ Object constructed</p>";
 echo "<p>= Setting 'kittens' to 'furry'<br>";
 $sol->setting->kittens = "furry";
-echo "+ Output \$sol->settings()->kittens</p>";
+echo "+ Output \$sol->setting->kittens</p>";
 echo $sol->setting->kittens;
 echo "<p>Test result : ";
 if($sol->setting->kittens == "furry") {
@@ -26,16 +26,49 @@ if($sol->setting->getDatabaseType() == "Mysql") {
 	echo "Fail";
 }
 
-echo "<p>= Saving 'kittens' as permanent variable<br>";
+echo "<p>= Checking kittens cannot be saved as global</p>Test result : ";
+try {
+	$sol->setting->registerGlobalSetting('kittens','fluffy');
+	echo "Fail";
+} catch (Exception $e) {
+	echo "Success";
+}
+
+echo "<p>= Remove kittens variable</p>Test result : ";
+$sol->setting->unregisterSetting('kittens');
+try {
+	$k = $sol->setting->kittens;
+	echo "Fail";
+} catch (Exception $e) {
+	echo "Success";
+}
+
+echo "<p>= Checking for existing puppies</p>";
+if($sol->setting->exists('puppies')) {
+	echo "Puppies found, removing";
+	$sol->setting->unregisterSetting('puppies');
+}
+
+echo "<p>= Saving 'puppies' as permanent variable<br>";
+$sol->setting->registerGlobalSetting('puppies','cute',true);
 
 echo "+ Sol object destroyed<br>";
+unset($sol);
 echo "+ New Sol object constructed<br>";
-echo "+ Output \$sol->settings()->kittens</p>";
+$sol = new Sol();
 
-echo "<p>Test result : ";
-
+echo "+ Output \$sol->settings->puppies</p>Test result : ";
+if($sol->setting->puppies == "cute") {
 	echo "Success";
-
+} else {
 	echo "Fail";
+}
 
+echo "<p>= Check locked puppies variable cannot be changed</p> Test result : ";
+try {
+	$sol->setting->puppies = "ugly";
+	echo "Fail";
+} catch (Exception $e) {
+	echo "Success";
+}
 ?>
