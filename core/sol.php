@@ -6,6 +6,7 @@ protected $_setting;
 protected $_module;
 protected $_data;
 protected $_theme;
+protected $_arg;
 
 public function getModule() {
 	if($this->_module === null) {
@@ -16,7 +17,7 @@ public function getModule() {
 
 public function getData() {
 	if($this->_data === null) {
-		$dtype = $this->setting->getDatabaseType();
+		$dtype = BaseSetting::getDatabaseType();
 		$this->_data = new $dtype();
 	}
 	return $this->_data;
@@ -31,9 +32,13 @@ public function getTheme() {
 
 public function getSetting() {
 	if($this->_setting === null) {
-		$this->_setting = new SolSetting();
+		$this->_setting = new SolSetting($this);
 	}
 	return $this->_setting;
+}
+
+public function getArgs() {
+	return $this->_arg;
 }
 
 public function __get($name) {
@@ -45,16 +50,22 @@ public function __get($name) {
 
 //This function will break the query string into usable chunks
 protected function processQueryString() {
-	//if($this->setting()->
+	//if($this->setting->exists("sol.useCleanURL")
+	//TODO: Sanitise arguments
+	foreach(explode('/',$_SERVER['PATH_INFO']) as $query) {
+		if(!empty($query)) {
+			$this->_arg[] = $query;
+		}
+	}
 }
 
 //Entry point into the program
 public function main() {
+
 }
 
 function __construct() {
-	
-
+	$this->processQueryString();
 }
 
 }
