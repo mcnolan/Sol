@@ -4,8 +4,8 @@ class BaseSetting {
 
 	private static $_adaptor = "Mysql";
 	private $_dbHost = "localhost";
-	private $_dbUser = "root";
-	private $_dbPass = "ergitz";
+	private $_dbUser = "username";
+	private $_dbPass = "password";
 	private $_dbData = "sol";
 	public static $pre = "sol_";
 
