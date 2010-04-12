@@ -12,6 +12,8 @@ class Error {
 	const E_MODULE_ILLEGAL = 302;
 	//Module already installed
 	const E_MODULE_IEXISTS = 303;
+	//Autoload failure
+	const E_MODULE_NOLOAD = 304;
 	//General setting error
 	const E_SETTING = 400;
 	//Trying to get a setting that doesn't exist

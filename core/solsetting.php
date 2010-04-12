@@ -1,7 +1,8 @@
 <?
 class SolSetting extends BaseSetting {
 	private $_extra = array();
-	private $_sol;	
+	private $_sol;
+	const MODULE_PATH = "/modules/";
 
 	public function __get($name) {
 		if(!empty($this->_extra[$name]["value"])) {
