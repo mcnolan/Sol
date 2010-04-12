@@ -1,4 +1,3 @@
-<pre>
 <?
 include "../core/sol.php";
 include "../basesetting.php";
@@ -15,7 +14,7 @@ class one extends AModule {
 	}
 	function main() {
 		//sample output data
-		var_dump($this->data()->tableSelect('setting'));
+		echo "Hello World, this is " . $this->getName();
 	}
 	function boo() {
 		$this->runHooks("view","Error");
@@ -29,7 +28,10 @@ class two extends AModule {
 		echo "module two install\n";
 	}
 	function main() {}
-	function oneView($data) { echo "this is module two\n$data\n"; }
+	function oneView($data) { echo "this is module two custom data = '$data'<br>"; }
+	function checkOtherModule() {
+		return $this->getModule("three")->printOut();
+	}	
 }
 
 class three extends AModule {
@@ -37,7 +39,8 @@ class three extends AModule {
 		echo "module three install\n";
 	}
 	function main() {}
-	function oneView() { echo "this is module three\n"; }
+	function oneView() { echo "this is module three<br>"; }
+	function printOut() { return "Test result : Success"; }
 }
 
 class four {
@@ -48,25 +51,30 @@ class four {
 
 echo "<p>Testing Sol Modules</p>";
 
-echo "<p>Installing sample modules</p>";
+echo "+ Installing sample modules<br>";
 try {
 	$sol->module->install(new one($sol));
 	$sol->module->install(new two($sol));
 	$sol->module->install(new three($sol));
 } catch (Exception $e) {
-
+	echo "<Modules already exist>";
 }
+echo "+ Attempting to install illegal module<br> Test result : ";
 try {
 	$sol->module->install(new four());
+	echo "Fail";
 } catch(Exception $e) {
-	echo "Did not install four\n";
+	echo "Success";
 }
-echo "<p>Checking one output/checking backwards referencing</p>";
+echo "<p>= Checking module output</p>";
 $sol->module->one->main();
 
-echo "<p>Testing hooks</p>";
+echo "<p>= Testing hooks</p>";
 $sol->module->one->boo();
+
+echo "<p>= Testing backwards referencing</p>";
+
+echo $sol->module->two->checkOtherModule();
 
 
 ?>
-</pre>
