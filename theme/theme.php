@@ -11,11 +11,11 @@ class ThemeHandler {
 	public function __set($name, $value) {
 		$this->_data[$name] = $value;
 	}
-	public function language($name) {
+	public function language() {
 		if($this->_language === null) {
 			$this->_language = new Language($this->_sol);
 		}
-		return $this->_language->$name;
+		return $this->_language;
 	}
 
 	public function render() {
@@ -33,7 +33,7 @@ class ThemeHandler {
 		} elseif(file_exists($module)) {
 			//File within module
 			return $this->bufferTemplate($module);
-		} elseif(file_exists($default) {
+		} elseif(file_exists($default)) {
 			return $this-> bufferTemplate($default);
 		} else {
 			throw new exception("Template file does not exist",501);
