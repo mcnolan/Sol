@@ -30,6 +30,14 @@ abstract class AModule {
 			return $this->_sol->args[$ref];
 		}
 	}
+	protected function getModule($name) {
+		try {
+			return $this->_sol->module->$name;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
 	protected function runHooks($function,$pass = "") {
 		$this->_sol->module->executeHooks($this->getName().ucfirst($function),$pass);
 	}

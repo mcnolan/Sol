@@ -12,6 +12,8 @@ class Error {
 	const E_MODULE_ILLEGAL = 302;
 	//Module already installed
 	const E_MODULE_IEXISTS = 303;
+	//Autoload failure
+	const E_MODULE_NOLOAD = 304;
 	//General setting error
 	const E_SETTING = 400;
 	//Trying to get a setting that doesn't exist
@@ -22,6 +24,10 @@ class Error {
 	const E_SETTING_REGEXIST = 403;
 	//Trying to remove a setting that doesn't exist
 	const E_SETTING_REMEXIST = 404;
+	//General Theme/template error
+	const E_THEME = 500;
+	//Template file does not exist
+	const E_TEMPLATE_NOSUCH = 501;
 	
 	public static function printError($code,$text) {
 		echo "Error code $code\n$text";
