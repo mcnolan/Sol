@@ -3,6 +3,8 @@ class SolSetting extends BaseSetting {
 	private $_extra = array();
 	private $_sol;
 	const MODULE_PATH = "/modules/";
+	const THEME_PATH = "/theme/";
+	const THEME_LAYOUT = "layout.phtml";
 
 	public function __get($name) {
 		if(!empty($this->_extra[$name]["value"])) {
