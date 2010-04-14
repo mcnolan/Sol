@@ -5,6 +5,7 @@ class SolSetting extends BaseSetting {
 	const MODULE_PATH = "/modules/";
 	const THEME_PATH = "/theme/";
 	const THEME_LAYOUT = "layout.phtml";
+	const THEME_LANG_FILE = "language.xml";
 
 	public function __get($name) {
 		if(!empty($this->_extra[$name]["value"])) {
