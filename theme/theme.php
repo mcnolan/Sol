@@ -11,6 +11,12 @@ class ThemeHandler {
 	public function __set($name, $value) {
 		$this->_data[$name] = $value;
 	}
+	public function language($name) {
+		if($this->_language === null) {
+			$this->_language = new Language($this->_sol);
+		}
+		return $this->_language->$name;
+	}
 
 	public function render() {
 		//print the layout template to screen, hopefully you've loaded the $content variable at this point.
