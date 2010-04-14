@@ -2,10 +2,12 @@
 class SolSetting extends BaseSetting {
 	private $_extra = array();
 	private $_sol;
-	const MODULE_PATH = "/modules/";
-	const THEME_PATH = "/theme/";
+	const MODULE_PATH = "../module/";
+	const MODULE_AUTOLOAD_LANG = true;
+	const THEME_PATH = "../theme/";
+	const THEME_EXT = ".phtml";
 	const THEME_LAYOUT = "layout.phtml";
-	const THEME_LANG_FILE = "language.xml";
+	const LANGUAGE_FILE = "language.xml";
 
 	public function __get($name) {
 		if(!empty($this->_extra[$name]["value"])) {

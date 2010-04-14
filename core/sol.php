@@ -25,7 +25,7 @@ public function getData() {
 
 public function getTheme() {
 	if($this->_theme === null) {
-		$this->_theme = new ThemeHandler();
+		$this->_theme = new ThemeHandler($this);
 	}
 	return $this->_theme;
 }
@@ -61,7 +61,7 @@ protected function processQueryString() {
 
 //Entry point into the program
 public function main() {
-
+	//TODO: Main execution
 }
 
 function __construct() {

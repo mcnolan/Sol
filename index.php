@@ -17,6 +17,7 @@ require_once("core/sol.php");
 require_once("core/data.php");
 require_once("core/error.php");
 require_once("module/module.php");
+require_once("theme/language.php");
 require_once("theme/theme.php");
 
 //Start the ball rolling

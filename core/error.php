@@ -28,6 +28,10 @@ class Error {
 	const E_THEME = 500;
 	//Template file does not exist
 	const E_TEMPLATE_NOSUCH = 501;
+	//General Language definition error
+	const E_LANGUAGE = 600;
+	//Language file does not exist
+	const E_LANGUAGE_NOSUCH = 601;
 	
 	public static function printError($code,$text) {
 		echo "Error code $code\n$text";

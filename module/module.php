@@ -25,6 +25,11 @@ abstract class AModule {
 			return $this->_sol->theme;
 		}
 	}
+	protected function language($variable, $module = "Default") {
+		//TODO: possibly change this to read the classes language set by default
+		$langset = $this->theme()->language()->$module;
+		return $langset[$variable];
+	}
 	protected function args($ref) {
 		if(isset($this->_sol)) {
 			return $this->_sol->args[$ref];
@@ -50,6 +55,12 @@ abstract class AModule {
 	//Default constructor
 	public function __construct(Sol $baseref) {
 		$this->_sol = $baseref;
+		if(SolSetting::MODULE_AUTOLOAD_LANG) {
+			$xml = SolSetting::MODULE_PATH.$this->getName()."/".SolSetting::LANGUAGE_FILE;
+			if(file_exists($xml)) {
+				$this->theme()->language()->readLanguageFile($xml);
+			}
+		}
 	}
 
 }
