@@ -3,6 +3,7 @@
 abstract class AModule {
 
 	private $_sol;
+	protected $_locked = false;
 
 	//do something to install
 	abstract function install();
@@ -11,41 +12,66 @@ abstract class AModule {
 
 	protected function data() {
 		if(isset($this->_sol)) {
-			return $this->_sol->data();
+			return $this->_sol->data;
 		}
 	}
 	protected function setting() {
 		if(isset($this->_sol)) {
-			return $this->_sol->setting();
+			return $this->_sol->setting;
 		}
 	}
 	protected function theme() {
 		if(isset($this->_sol)) {
-			return $this->_sol->theme();
+			return $this->_sol->theme;
 		}
+	}
+	protected function language($variable, $module = "Default") {
+		//TODO: possibly change this to read the classes language set by default
+		$langset = $this->theme()->language()->$module;
+		return $langset[$variable];
 	}
 	protected function args($ref) {
 		if(isset($this->_sol)) {
 			return $this->_sol->args[$ref];
 		}
 	}
-	public function getClassName() {
+	protected function getModule($name) {
+		try {
+			return $this->_sol->module->$name;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
+	protected function runHooks($function,$pass = "") {
+		$this->_sol->module->executeHooks($this->getName().ucfirst($function),$pass);
+	}
+	public function getName() {
 		return get_class($this);
+	}
+	public function getLocked() {
+		return $this->_locked;
 	}
 	//Default constructor
 	public function __construct(Sol $baseref) {
 		$this->_sol = $baseref;
+		if(SolSetting::MODULE_AUTOLOAD_LANG) {
+			$xml = SolSetting::MODULE_PATH.$this->getName()."/".SolSetting::LANGUAGE_FILE;
+			if(file_exists($xml)) {
+				$this->theme()->language()->readLanguageFile($xml);
+			}
+		}
 	}
 
 }
 
 class ModuleHandler {
 
-	protected $_modules;
+	protected $_modules = array();
 	protected $_sol;
 
 	public function __get($name) {
-		if(isset($this->_modules[$name])) {	
+		if(array_key_exists($name,$this->_modules)) {
 			//Module registered, check if object
 			if(!is_object($this->_modules[$name])) {
 				$this->_modules[$name] = new $name($this->_sol);
@@ -56,27 +82,22 @@ class ModuleHandler {
 		}
 	
 	}
-	/*
-	public function __set($name, $value) {
-		if(is_subclass_of($value,'IModule')) {
-			$this->_modules[$name] = $value;
-		}
-	} */
 
-	public function executeHooks($function) {
+	public function executeHooks($function,$pass = "") {
 		foreach($this->_modules as $mname => $module) {
 			//check if hook function exists
 			$flist = get_class_methods($mname);
 			if(in_array($function,$flist)) {
 				//run hook function
-				$this->$mname->$function();
+				$this->$mname->$function($pass);
 			}
 		}
 	}
 
-	private function registerModule(AModule $module) {
-		//TODO Add module-database interaction /Add to database
-		$this->_modules[get_class($module)] = $module;
+	private function register(AModule $module) {
+		$newmodule[] = array("ModuleName" => $module->getName(), "ModuleLock" => $module->getLocked());
+		$this->_sol->data->tableInsert('module',$newmodule);
+		$this->_modules[$module->getName()] = $module;
 	}
 	
 	private function getRegisteredModules() {
@@ -86,6 +107,10 @@ class ModuleHandler {
 		}
 	}
 	
+	public function exists($name) {
+		return array_key_exists($name,$this->_modules);
+	} 
+
 	public function __construct(Sol $sol) {
 		$this->_sol = $sol;
 		$this->getRegisteredModules();
@@ -94,9 +119,12 @@ class ModuleHandler {
 	
 	public function install($module) {
 		if(is_subclass_of($module,'AModule')) {
-			//error check?			
-			$module->_install();
-			$this->registerModule($module);
+			if(!$this->exists($module->getName())) {
+				$module->install();
+				$this->register($module);
+			} else {
+				throw new exception("Module already installed",303);
+			}
 		} else {
 			throw new exception("Illegal Module, cannot install",302);
 		}
