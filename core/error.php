@@ -1,4 +1,18 @@
 <?php
+/* 
+| Project Sol
+| A ~Nolan (http://github.com/mcnolan) production.
+|
+| Attached Version : 2010/M1
+| 
+| File : error.php
+| 
+| Purpose : Provides Error handling
+| 
+| 
+| Sol is copyright Nolan 2010, see README for more details
+|
+*/
 class Error {
 
 	//lets declare some custom error types
@@ -34,6 +48,7 @@ class Error {
 	const E_LANGUAGE_NOSUCH = 601;
 	
 	public static function printError($code,$text) {
+		//TODO: Flesh this out
 		echo "Error code $code\n$text";
 	}
 

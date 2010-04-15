@@ -1,5 +1,19 @@
 <?php
-//base class for all modules
+/* 
+| Project Sol
+| A ~Nolan (http://github.com/mcnolan) production.
+|
+| Attached Version : 2010/M1
+| 
+| File : module.php
+| 
+| Purpose : Contains Abstract class for all Sol supplimentary modules and Sol's module handling class
+| 
+| 
+| Sol is copyright Nolan 2010, see README for more details
+|
+*/
+
 abstract class AModule {
 
 	private $_sol;
@@ -26,7 +40,6 @@ abstract class AModule {
 		}
 	}
 	protected function language($variable, $module = "Default") {
-		//TODO: possibly change this to read the classes language set by default
 		$langset = $this->theme()->language()->$module;
 		return $langset[$variable];
 	}
@@ -66,10 +79,11 @@ abstract class AModule {
 }
 
 class ModuleHandler {
-
+	//Array of all registered modules
 	protected $_modules = array();
 	protected $_sol;
 
+	//Provides read access to registered modules
 	public function __get($name) {
 		if(array_key_exists($name,$this->_modules)) {
 			//Module registered, check if object
@@ -82,7 +96,8 @@ class ModuleHandler {
 		}
 	
 	}
-
+	
+	//Execute a function across all module classes if it exists
 	public function executeHooks($function,$pass = "") {
 		foreach($this->_modules as $mname => $module) {
 			//check if hook function exists
@@ -93,32 +108,38 @@ class ModuleHandler {
 			}
 		}
 	}
-
+	
+	//Register module with the database
 	private function register(AModule $module) {
+		//TODO: Probably want to change this to a module name, not the actual module.
 		$newmodule[] = array("ModuleName" => $module->getName(), "ModuleLock" => $module->getLocked());
 		$this->_sol->data->tableInsert('module',$newmodule);
 		$this->_modules[$module->getName()] = $module;
 	}
 	
+	//Loads all modules registered with the database
 	private function getRegisteredModules() {
 		$modules = $this->_sol->data->tableSelect('module');
 		foreach($modules as $module) {
 			$this->_modules[$module->ModuleName] = null;
 		}
 	}
-	
+
+	//Check if a module is registered	
 	public function exists($name) {
 		return array_key_exists($name,$this->_modules);
 	} 
-
+	
+	//Store the root class reference and load registered modules
 	public function __construct(Sol $sol) {
 		$this->_sol = $sol;
 		$this->getRegisteredModules();
 	}
 	
-	
+	//Install module and register with the database
 	public function install($module) {
 		if(is_subclass_of($module,'AModule')) {
+			//Lets try and avoid installing a module more than once
 			if(!$this->exists($module->getName())) {
 				$module->install();
 				$this->register($module);

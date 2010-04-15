@@ -1,10 +1,24 @@
 <?
+/* 
+| Project Sol
+| A ~Nolan (http://github.com/mcnolan) production.
+|
+| Attached Version : 2010/M1
+| 
+| File : solsetting.php
+| 
+| Purpose : Extension of the basesetting class, containing application level settings and providing access to database controlled settings.
+| 
+| 
+| Sol is copyright Nolan 2010, see README for more details
+|
+*/
 class SolSetting extends BaseSetting {
 	private $_extra = array();
 	private $_sol;
-	const MODULE_PATH = "../module/";
+	const MODULE_PATH = "module/";
 	const MODULE_AUTOLOAD_LANG = true;
-	const THEME_PATH = "../theme/";
+	const THEME_PATH = "theme/";
 	const THEME_EXT = ".phtml";
 	const THEME_LAYOUT = "layout.phtml";
 	const LANGUAGE_FILE = "language.xml";
