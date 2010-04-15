@@ -15,7 +15,8 @@ class Testing extends AModule{
 	}
 	
 	function main() {
-	
+		$this->theme()->content = $this->theme()->loadTemplate('testing','Testing');
+		$this->theme()->render();
 	}
 
 }
