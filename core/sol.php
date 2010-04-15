@@ -62,10 +62,18 @@ protected function processQueryString() {
 //Entry point into the program
 public function main() {
 	//TODO: Main execution
+	$this->module->executeHooks("solInit");
+	if(isset($this->_arg[0]) && $this->module->exists($this->_arg[0])) {
+		$module = $this->_arg[0];
+	} else {
+		$module = $this->setting->defaultModule;
+	}
+	$this->module->$module->main();
 }
 
 function __construct() {
 	$this->processQueryString();
+	$this->main();
 }
 
 }

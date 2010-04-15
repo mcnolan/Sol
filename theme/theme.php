@@ -20,14 +20,15 @@ class ThemeHandler {
 
 	public function render() {
 		//print the layout template to screen, hopefully you've loaded the $content variable at this point.
-		echo bufferTemplate(SolSetting::THEME_PATH.$this->_sol->setting->currentTheme."/".SolSetting::THEME_LAYOUT);
+		echo $this->bufferTemplate(SolSetting::THEME_PATH.$this->_sol->setting->currentTheme."/".SolSetting::THEME_LAYOUT);
 	}
 	
 	public function loadTemplate($name, $mdirectory = "") {
 		//Build directory paths
 		$override = SolSetting::THEME_PATH.$this->_sol->setting->currentTheme."/".$name.".phtml";
-		$module = SolSetting::MODULE_PATH.$mdirectory."/".$name.".phtml";
+		$module = SolSetting::MODULE_PATH.ucfirst($mdirectory)."/".$name.".phtml";
 		$default = SolSetting::THEME_PATH.$this->_sol->setting->defaultTheme."/".$name.".phtml";
+		//echo $override . " " . $module . " " . $default . "<br>";
 		if(file_exists($override)) {
 			return $this->bufferTemplate($override);
 		} elseif(file_exists($module)) {
@@ -43,6 +44,8 @@ class ThemeHandler {
 	public function bufferTemplate($file) {
 		if(file_exists($file)) {
 			ob_start();
+			//Setup shortcut variables
+			$language = $this->language();
 			include_once($file);
 			$result = ob_get_contents();
 			ob_end_clean();
