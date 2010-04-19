@@ -35,7 +35,7 @@ require_once("core/error.php");
 require_once("module/module.php");
 require_once("theme/language.php");
 require_once("theme/theme.php");
-require_once("core/authentication");
+require_once("core/authentication.php");
 
 //Start the ball rolling
 $sol = new Sol();

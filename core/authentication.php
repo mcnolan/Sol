@@ -93,7 +93,7 @@ class Authentication {
 	}
 	//Login function to be called by foreign classes
 	public function login($username, $password) {
-		return (this->processCredentials($username, md5($hash)));
+		return $this->processCredentials($username, md5($password));
 	}
 
 	public function logout() {
