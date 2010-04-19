@@ -22,6 +22,7 @@ class BaseSetting {
 	private $_dbPass = "password";
 	private $_dbData = "sol";
 	public static $pre = "sol_";
+	public static $rand = "123456789abcdefg";
 	//This function tells Sol which database class to load
 	static function getDatabaseType() {
 		return BaseSetting::$_adaptor;
