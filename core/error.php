@@ -46,7 +46,12 @@ class Error {
 	const E_LANGUAGE = 600;
 	//Language file does not exist
 	const E_LANGUAGE_NOSUCH = 601;
-	
+	//General Authentication error
+	const E_AUTH = 700;
+	//Attempted to load permissions while not logged in
+	const E_AUTH_NOTLOGGEDIN = 701;
+
+
 	public static function printError($code,$text) {
 		//TODO: Flesh this out
 		echo "Error code $code\n$text";

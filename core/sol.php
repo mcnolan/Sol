@@ -19,6 +19,8 @@ protected $_setting;
 protected $_module;
 protected $_data;
 protected $_theme;
+protected $_auth;
+
 protected $_arg;
 //Retrieve the module handler class
 public function getModule() {
@@ -49,6 +51,14 @@ public function getSetting() {
 	}
 	return $this->_setting;
 }
+//Retrieve the Authentication class
+public function getAuth() {
+	if($this->_auth === null) {
+		$this->_auth = new Authentication($this);
+	}
+	return $this->_auth;
+}
+
 //Get the arguments provided in the query string
 public function getArgs() {
 	return $this->_arg;
