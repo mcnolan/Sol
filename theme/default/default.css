@@ -52,7 +52,7 @@ td {
 	padding-bottom: 10;
 }
 
-.profile_characters .character a:link {
+.profile_characters .character a:link, .profile_characters .character a:visited {
 	text-decoration: none;
 	color: #ffffff;
 }
