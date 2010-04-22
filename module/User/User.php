@@ -16,10 +16,18 @@
 class User extends AModule {
 
 	private function rolesAction() {}
-	private function moderateAction() {}
+	private function moderateAction() {
+		$this->theme()->content = $this->theme()->loadTemplate('character','User');
+		$this->theme()->render();
+	}
 	private function loginAction() {}
 	private function registerAction() {}
-	private function userAction() {}
+
+	private function userAction($userid = 0) { 
+		$this->theme()->content = $this->theme()->loadTemplate('profile','User');
+		$this->theme()->render();
+	}
+	
 	private function controlAction() {}
 	private function defaultAction() {}
 
@@ -29,13 +37,13 @@ class User extends AModule {
 
 	public function main() {
 		//if supplied with an action, use it. Otherwise, pick off query arguments
-		$func = strtolower($this->args(1)) + "Action";
+		$func = strtolower($this->args(1)) . "Action";
 		if(method_exists($this,$func)) {
 			$this->$func();
 		} else {
-			if(is_int($this->args(1))) {
+			if(is_numeric($this->args(1))) {
 				//If a userid has been passed, go to that users page equiv of /User/User/<1234>
-				$this->userAction();
+				$this->userAction($this->args(1));
 			} else {
 				$this->defaultAction();
 			}

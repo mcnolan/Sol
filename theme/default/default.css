@@ -1,0 +1,95 @@
+body {
+	background-color: #000000;
+	color: #ffffff;
+}
+td {
+	color: #ffffff;
+}
+.central {
+	
+}
+.profile_imagebox {
+	float: left;
+	font-size: 10pt;
+	padding: 10;
+}
+.profile_comments {
+	padding-bottom: 25;
+}
+.profile_blurb {
+}
+.profile_comments .player {
+	font-size: 10pt;
+}
+.profile_comments .date {
+	text-align: right;
+	font-size: 10pt;
+}
+.profile_comments .comment {
+
+}
+.profile_comments .indent_one {
+	padding-left: 40;
+}
+.profile_comments .indent_two {
+	padding-left: 80;
+}
+
+.profile_comments table {
+	padding-top: 5;
+}
+
+.profile_characters {
+	padding: 5;
+	padding-left: 10;
+}
+
+.profile_characters .hierarchy {
+	font-size: 10pt;
+}
+
+.profile_characters .character {
+	padding-bottom: 10;
+}
+
+.profile_characters .character a:link {
+	text-decoration: none;
+	color: #ffffff;
+}
+
+.floatleft {
+
+	padding: 1;
+}
+.character_feed {
+	font-size: 8pt;
+}
+.profile_positions {
+	font-size: 12pt;
+	padding-bottom: 5;
+}
+.profile_positions .hierarchy {
+	font-size: 10pt;
+}
+.profile_subtext {
+	font-size: 8pt;
+	text-align: center;
+}
+.profile_owner {
+	font-size: 10pt;
+	padding: 0;
+}
+.profile_name {
+	font-size: 16pt;
+	font-weight: bold;
+	padding-bottom: 0;
+}
+.profile_heading {
+	border: 1px solid black;
+	font-weight: bold;
+	padding-top: 10;
+}
+.profile_subheading {
+	font-weight: bold;
+	padding-bottom: 5;
+}
