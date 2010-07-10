@@ -18,9 +18,18 @@ class News extends AModule {
 	private function archiveAction() {}
 	private function submitAction() {}
 	private function moderateAction() {}
+	private function defaultAction() {}
 
 	public function install() {}
-	public function main() {}
+	public function main() {
+		if(!empty($this->args(1))) {
+			$func = strtolower($this->args(1)) . "Action";
+			if(function_exists($func,$this) {
+				$this->$func();
+			} 
+		}
+		$this->defaultAction();
+	}
 }
 
 ?>

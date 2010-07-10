@@ -14,9 +14,20 @@
 |
 */
 class Comment extends AModule{
+	private $_comment;
 
 	public function install();
 	public function main();
 
+	public function renderComments($module, $page, $pageid) {
+				
+	}
+	
+	public function getComments($module, $page, $pageid) {
+
+	}
+	public function addComment($module, $page, $pageid, $userid, $comment) {
+
+	}
 }
 ?>
